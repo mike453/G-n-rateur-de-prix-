@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Calculateur de prix Top Isol</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <style>
+    h1 {
+      color: green;
+    }
+    .table {
+      background-color: white;
+    }
+    .btn-calculate {
+      background-color: green;
+      color: white;
+    }
+    .btn-calculate:hover {
+      background-color: darkgreen;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container mt-5">
+  <h1 class="text-center">Calculateur de prix Top Isol</h1>
+  <form>
+    <div class="form-group mt-3">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Niveau</th>
+            <th>Surface (m²)</th>
+            <th>Epaisseur (cm)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rez-de-chaussée</td>
+            <td><input type="number" id="surface_rc" class="form-control" value="0"></td>
+            <td><input type="number" id="epaisseur_rc" class="form-control" value="0"></td>
+          </tr>
+          <tr>
+            <td>1er étage</td>
+            <td><input type="number" id="surface_1e" class="form-control" value="0"></td>
+            <td><input type="number" id="epaisseur_1e" class="form-control" value="0"></td>
+          </tr>
+          <tr>
+            <td>2ème étage</td>
+            <td><input type="number" id="surface_2e" class="form-control" value="0"></td>
+            <td><input type="number" id="epaisseur_2e" class="form-control" value="0"></td>
+          </tr>
+          <tr>
+            <td>3ème étage</td>
+            <td><input type="number" id="surface_3e" class="form-control" value="0"></td>
+            <td><input type="number" id="epaisseur_3e" class="form-control" value="0"></td>
+          </tr>
+          <tr>
+            <td>4ème étage</td>
+            <td><input type="number" id="surface_4e" class="form-control" value="0"></td>
+            <td><input type="number" id="epaisseur_4e" class="form-control" value="0"></td>
+          </tr>
+        </tbody>
+      </table>
+      <input type="button" value="Calculer" class="btn btn-calculate mt-3" onclick="calculateEpaisseurMoyenne()">
+</div>
+<div class="animated bounceInRight text-success mt-3" id="resultEpaisseurMoyenne" style="display: none;">
+<p>L'épaisseur moyenne est de <strong><span id="epaisseur_moyenne"></span> cm</strong></p>
+<p>La surface totale est de <strong><span id="surface_totale"></span> m²</strong></p>
+</div>
+
+  </form>
+</div>
+<script>
+  function calculateEpaisseurMoyenne() {
+    var surface_rc = parseFloat(document.getElementById("surface_rc").value);
+    var surface_1e = parseFloat(document.getElementById("surface_1e").value);
+    var surface_2e = parseFloat(document.getElementById("surface_2e").value);
+    var surface_3e = parseFloat(document.getElementById("surface_3e").value);
+    var surface_4e = parseFloat(document.getElementById("surface_4e").value);
+var epaisseur_rc = parseFloat(document.getElementById("epaisseur_rc").value);
+var epaisseur_1e = parseFloat(document.getElementById("epaisseur_1e").value);
+var epaisseur_2e = parseFloat(document.getElementById("epaisseur_2e").value);
+var epaisseur_3e = parseFloat(document.getElementById("epaisseur_3e").value);
+var epaisseur_4e = parseFloat(document.getElementById("epaisseur_4e").value);
+
+var surface_totale = surface_rc + surface_1e + surface_2e + surface_3e + surface_4e;
+var epaisseur_totale = (epaisseur_rc * surface_rc) + (epaisseur_1e * surface_1e) + (epaisseur_2e * surface_2e) + (epaisseur_3e * surface_3e) + (epaisseur_4e * surface_4e);
+
+var epaisseur_moyenne = epaisseur_totale / surface_totale;
+
+document.getElementById("epaisseur_moyenne").innerHTML = epaisseur_moyenne.toFixed(2);
+document.getElementById("surface_totale").innerHTML = surface_totale.toFixed(2);
+document.getElementById("resultEpaisseurMoyenne").style.display = "block";
+}
+</script>
+
+</body>
+</html>
+```
+<div class="form-section mt-5">
+  <h2 class="text-center">Estimation du prix</h2>
+  <form>
+    <div class="form-group">
+      <label for="surface">Surface en m² :</label>
+      <input type="number" id="surface" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label for="epaisseur">Epaisseur en cm :</label>
+      <input type="number" id="epaisseur" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label for="distance">Distance séparant le dépôt et le chantier en km:</label>
+      <input type="number" id="distance" class="form-control" required>
+    </div>
+
+   <div class="form-group">
+  <label for="temps_travail">Temps de travail estimé en jours:</label>
+  <div id="temps_travail" class="form-control"></div>
+</div>
+
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="polyane">
+      <label class="form-check-label" for="polyane">
+        Polyane quadrillé et bande
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="assour">
+      <label class="form-check-label" for="assour">
+        Trami
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="polyane_gris">
+      <label class="form-check-label" for="polyane_gris">
+        Polyane gris et bande
+      </label>
+    </div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="sans_accessoires">
+  <label class="form-check-label" for="sans_accessoires">
+    Sans accessoires
+  </label>
+</div>
+
+    <div class="form-group">
+      <label for="client_type">Type de client :</label>
+      <select id="client_type" class="form-control" required>
+        <option value="constructeur">Constructeur/Promoteur</option>
+        <option value="professionnel">Professionnel</option>
+        <option value="particulier">Particulier</option>
+      </select>
+    </div>
+    <input type="button" value="Calculer" class="btn btn-success" onclick="calculatePrice()">
+  </form>
+  <div class="animated bounceInRight text-success mt-3" id="result" style="display: none;">
+    <p>Le prix conseillé est de <strong><span id="cout_total"></span> €/m²</strong></p>
+<div class="mt-3">
+  <p>Prix conseillé par niveau :</p>
+  <ul id="prix_par_niveau"></ul>
+</div>
+  </div>
+</div>
+<script>
+function calculatePrice() {
+var surface_totale = parseFloat(document.getElementById("surface_rc").value) + parseFloat(document.getElementById("surface_1e").value) + parseFloat(document.getElementById("surface_2e").value) + parseFloat(document.getElementById("surface_3e").value) + parseFloat(document.getElementById("surface_4e").value);
+var epaisseur_totale = (epaisseur_rc * surface_rc) + (epaisseur_1e * surface_1e) + (epaisseur_2e * surface_2e) + (epaisseur_3e * surface_3e) + (epaisseur_4e * surface_4e);
+var epaisseur_moyenne = epaisseur_totale / surface_totale;
+
+    var surface = document.getElementById("surface").value;
+    var epaisseur = document.getElementById("epaisseur").value;
+    var distance = document.getElementById("distance").value;
+    var temps_travail = document.getElementById("temps_travail").value;
+
+    // Nouvelle condition pour temps_travail
+    if (surface >= 80 && surface <= 130) {
+        temps_travail = 1;
+    } else {
+        temps_travail = (surface / 130).toFixed(1);
+    }
+    document.getElementById("temps_travail").value = temps_travail;
+
+    var polyane = document.getElementById("polyane").checked;
+    var assour = document.getElementById("assour").checked;
+    var polyane_gris = document.getElementById("polyane_gris").checked;
+    var sans_accessoires = document.getElementById("sans_accessoires").checked; // Ajout de la variable
+
+    var client_type = document.getElementById("client_type").value;
+    var cout_total = 0;
+    var cout_matiere = 2.4 * epaisseur * surface;
+
+    // Modifications de la condition if-else
+    if (client_type === "constructeur") {
+        cout_matiere = 2 * epaisseur * surface;
+        if (polyane) {
+            cout_supplementaire = 1 * surface;
+        } else if (assour) {
+            cout_supplementaire = 5.5 * surface;
+        } else if (polyane_gris) {
+            cout_supplementaire = 0.9 * surface;
+        } else if (sans_accessoires) {
+            cout_supplementaire = 0 * surface; // Cas où sans_accessoires est coché
+        }
+        var marge = temps_travail * 150;
+    } else if (client_type === "professionnel") {
+        cout_matiere = 2.4 * epaisseur * surface;
+        if (polyane) {
+            cout_supplementaire = 2.5 * surface;
+        } else if (assour) {
+            cout_supplementaire = 6.5 * surface;
+        } else if (polyane_gris) {
+            cout_supplementaire = 2 * surface;
+        } else if (sans_accessoires) {
+            cout_supplementaire = 0 * surface;
+        }
+        var marge = temps_travail * 350;
+    } else if (client_type === "particulier") {
+        cout_matiere = 2.4 * epaisseur * surface;
+        if (polyane) {
+            cout_supplementaire = 2.5 * surface;
+        } else if (assour) {
+            cout_supplementaire = 6.5 * surface;
+        } else if (polyane_gris) {
+            cout_supplementaire = 2 * surface;
+        } else if (sans_accessoires) {
+            cout_supplementaire = 0 * surface;
+        }
+        var marge = temps_travail * 500;
+    }
+
+    var frais_kilometriques = distance * 2 * 0.6;
+    var cout_production = temps_travail * 1000;
+    var cout_supplementaire = 0;
+
+    cout_total = cout_matiere + frais_kilometriques + cout_production + cout_supplementaire + marge;
+    cout_total = cout_total / surface;
+    document.getElementById("cout_total").innerHTML = cout_total.toFixed(2);
+    document.getElementById
+
+
+cout_total = cout_matiere + frais_kilometriques + cout_production + cout_supplementaire + marge;
+cout_total = cout_total / surface;
+document.getElementById("cout_total").innerHTML = cout_total.toFixed(2);
+// Calcul des prix conseillés par niveau
+var poids_total = surface_totale * epaisseur_moyenne;
+var prix_par_niveau = [];
+var pourcentage_reference = 33.33;
+var prix_moyen = cout_total;
+
+for (var i = 0; i < 5; i++) {
+  var poids_niveau = (parseFloat(document.getElementById("surface_" + i + "e").value) * parseFloat(document.getElementById("epaisseur_" + i + "e").value));
+  var pourcentage_poids = (poids_niveau / poids_total) * 100;
+  var difference = (pourcentage_poids - pourcentage_reference) / 100;
+  var prix_ajuste = (1 + difference) * prix_moyen;
+  prix_par_niveau.push(prix_ajuste.toFixed(2));
+}
+
+// Affichage des prix conseillés par niveau
+var ulElement = document.getElementById("prix_par_niveau");
+ulElement.innerHTML = "";
+for (var i = 0; i < prix_par_niveau.length; i++) {
+  if (parseFloat(document.getElementById("surface_" + i + "e").value) > 0) {
+    var liElement = document.createElement("li");
+    liElement.textContent = "Niveau " + (i + 1) + " : " + prix_par_niveau[i] + " €/m²";
+    ulElement.appendChild(liElement);
+  }
+}
+
+document.getElementById("result").style.display = "block";
+// Calcul des prix conseillés par niveau
+var poids_total = surface_totale * epaisseur_moyenne;
+var prix_par_niveau = [];
+var pourcentage_reference = 33.33;
+var prix_moyen = cout_total;
+
+for (var i = 0; i < 5; i++) {
+  var poids_niveau = (parseFloat(document.getElementById("surface_" + i + "e").value) * parseFloat(document.getElementById("epaisseur_" + i + "e").value));
+  var pourcentage_poids = (poids_niveau / poids_total) * 100;
+  var difference = (pourcentage_poids - pourcentage_reference) / 100;
+  var prix_ajuste = (1 + difference) * prix_moyen;
+  prix_par_niveau.push(prix_ajuste.toFixed(2));
+}
+
+// Affichage des prix conseillés par niveau
+<div class="mt-3">
+  <p>Prix conseillé par niveau :</p>
+  <ul id="prix_par_niveau"></ul>
+</div>
+
+var ulElement = document.getElementById("prix_par_niveau");
+ulElement.innerHTML = "";
+for (var i = 0; i < prix_par_niveau.length; i++) {
+  if (parseFloat(document.getElementById("surface_" + i + "e").value) > 0) {
+    var liElement = document.createElement("li");
+    liElement.textContent = "Niveau " + (i + 1) + " : " + prix_par_niveau[i] + " €/m²";
+    ulElement.appendChild(liElement);
+  }
+}
+
+document.getElementById("result").style.display = "block";
+// Calcul des prix conseillés par niveau
+var poids_total = surface_totale * epaisseur_moyenne;
+var prix_par_niveau = [];
+var pourcentage_reference = 33.33;
+var prix_moyen = cout_total;
+
+for (var i = 0; i < 5; i++) {
+  var poids_niveau = (parseFloat(document.getElementById("surface_" + i + "e").value) * parseFloat(document.getElementById("epaisseur_" + i + "e").value));
+  var pourcentage_poids = (poids_niveau / poids_total) * 100;
+  var difference = (pourcentage_poids - pourcentage_reference) / 100;
+  var prix_ajuste = (1 + difference) * prix_moyen;
+  prix_par_niveau.push(prix_ajuste.toFixed(2));
+}
+
+var poids_total = surface_totale * epaisseur_moyenne;
+var prix_par_niveau = [];
+var pourcentage_reference = 33.33;
+var prix_moyen = cout_total;
+
+for (var i = 0; i < 5; i++) {
+  var poids_niveau = (parseFloat(document.getElementById("surface_" + i + "e").value) * parseFloat(document.getElementById("epaisseur_" + i + "e").value));
+  var pourcentage_poids = (poids_niveau / poids_total) * 100;
+  var difference = (pourcentage_poids - pourcentage_reference) / 100;
+  var prix_ajuste = (1 + difference) * prix_moyen;
+  prix_par_niveau.push(prix_ajuste.toFixed(2));
+}
+
+// Affichage des prix conseillés par niveau
+var ulElement = document.getElementById("prix_par_niveau");
+ulElement.innerHTML = "";
+for (var i = 0; i < prix_par_niveau.length; i++) {
+  if (parseFloat(document.getElementById("surface_" + i + "e").value) > 0) {
+    var liElement = document.createElement("li");
+    liElement.textContent = "Niveau " + (i + 1) + " : " + prix_par_niveau[i] + " €/m²";
+    ulElement.appendChild(liElement);
+  }
+}
+document.getElementById("cout_total").innerHTML = cout_total.toFixed(2) + " €/m²";
+
+
+}
+
+</script>
